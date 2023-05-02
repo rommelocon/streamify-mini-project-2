@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Searchbar, Sidebar, MusicPlayer, TopPlay } from './components';
 import {
