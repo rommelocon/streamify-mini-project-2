@@ -45,3 +45,17 @@
 a {
 	text-decoration: none !important;
 }
+
+@keyframes slideup {
+    from {
+        opacity: 0;
+        transform: translateY(25%);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+.animate-slideup {
+    animation: slideup 1s ease-in-out;
+}
