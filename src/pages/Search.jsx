@@ -12,7 +12,6 @@ const Search = () => {
 	if (error) return <Error />;
 
 	const song = data?.tracks?.hits?.map((song) => song.track);
-	console.log(data);
 	return (
 		<>
 			<div className='flex flex-col'>
