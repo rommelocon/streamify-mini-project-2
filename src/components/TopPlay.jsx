@@ -31,7 +31,8 @@ const TopChartCard = ({
 				<Link to={`/songs/${song.key}`}>
 					<p className='text-xl font-bold text-white'>{song?.title}</p>
 				</Link>
-				<Link to={`/artists/${song?.artists}`}>
+				<Link to={`/artists/${song?.artists[0].adamid}`}>
+				{/* <Link> */}
 					<p className='text-base font-bold text-gray-300 mt-1'>
 						{song?.subtitle}
 					</p>
