@@ -15,9 +15,10 @@ export const shazamCoreApi = createApi({
 		},
 	}),
 	endpoints: (builder) => ({
-		getTopCharts: builder.query({ query: () => '/charts/track?startFrom=0' }),
+		getTopCharts: builder.query({ query: (startFromList = 0) => `/charts/track?startFrom=${startFromList}` }),
+		getChartList: builder.query({ query: () => `https://shazam.p.rapidapi.com/charts/list` }),
 		getSongDetails: builder.query({
-			query: ({ songid }) => `/songs/get-details?key=${songid}`,
+			query: ({ songid }) => `/songs/v2/get-details?key=${songid}`,
 		}),
 		getSongRelated: builder.query({
 			query: ({ songid }) => `/songs/list-recommendations?key=${songid}`,
@@ -28,13 +29,22 @@ export const shazamCoreApi = createApi({
 		getArtistTopSongDetails: builder.query({
 			query: ({ artistId }) => `/artists/get-top-songs?id=${artistId}`,
 		}),
+		getSongsByCountry: builder.query({
+			query: (countryCode) => `/charts/country?country_code=${countryCode}`,
+		}),
+		getSongsBySearch: builder.query({
+			query: (searchTerm) => `/search?term=${searchTerm}`,
+		}),
 	}),
 });
 
 export const {
 	useGetTopChartsQuery,
+	useGetChartListQuery,
 	useGetSongDetailsQuery,
 	useGetSongRelatedQuery,
 	useGetArtistDetailsQuery,
 	useGetArtistTopSongDetailsQuery,
+	useGetSongsByCountryQuery,
+	useGetSongsBySearchQuery,
 } = shazamCoreApi;
