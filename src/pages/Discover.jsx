@@ -4,9 +4,12 @@ import { genres } from '../assets/constants';
 
 import { useGetTopChartsQuery } from '../redux/services/shazamCore';
 import { selectGenreListId } from '../redux/features/playerSlice';
+import { useLocation } from 'react-router-dom';
 
 const Discover = () => {
 	const dispatch = useDispatch();
+	const location = useLocation();
+	
 	const { activeSong, isPlaying, genreListId } = useSelector((state) => state.player);
 
 	const { data, isFetching, error } = useGetTopChartsQuery();
@@ -21,7 +24,7 @@ const Discover = () => {
             sm:flex-row flex-col mt-4 mb-10'
 			>
 				<h2 className='font-bold text-3xl text-white text-left'>
-					Discover {genreListId}
+					Hello {location.state.id}, Discover {genreListId}
 				</h2>
 				<select
 					onChange={(e) => dispatch(selectGenreListId(e.target.value))}
