@@ -6,6 +6,7 @@ import Search from './Search';
 import TopCharts from './TopCharts';
 import AroundYou from './AroundYou';
 import Login from './Login';
+import Register from './Register';
 
 export {
 	Discover,
@@ -16,4 +17,5 @@ export {
 	TopCharts,
 	AroundYou,
 	Login,
+	Register,
 };
