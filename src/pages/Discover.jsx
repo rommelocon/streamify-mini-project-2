@@ -7,6 +7,7 @@ import { selectGenreListId } from '../redux/features/playerSlice';
 
 const Discover = () => {
 	const dispatch = useDispatch();
+	
 	const { activeSong, isPlaying, genreListId } = useSelector((state) => state.player);
 
 	const { data, isFetching, error } = useGetTopChartsQuery();
@@ -21,7 +22,7 @@ const Discover = () => {
             sm:flex-row flex-col mt-4 mb-10'
 			>
 				<h2 className='font-bold text-3xl text-white text-left'>
-					Discover {genreListId}
+					Hello, Discover {genreListId}
 				</h2>
 				<select
 					onChange={(e) => dispatch(selectGenreListId(e.target.value))}
