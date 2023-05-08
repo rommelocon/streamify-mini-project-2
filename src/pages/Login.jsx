@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Validation from './Validation';
+import ApiService from '../components/ApiService';
 
 function Login() {
 	const [values, setValues] = useState({
@@ -9,6 +10,18 @@ function Login() {
 	});
 
 	const [errors, setErrors] = useState({});
+
+	const [accounts, setAccounts] = useState([]);
+
+	const getAccountList = () => {
+		ApiService('/accounts', null, (data) => {
+			setAccounts(data);
+		});
+	};
+
+	useEffect(() => {
+		getAccountList();
+	}, []);
 
 	const handleInput = (event) => {
 		setValues((prev) => ({
@@ -21,6 +34,8 @@ function Login() {
 		event.preventDefault();
 		setErrors(Validation(values));
 	};
+
+	console.log(accounts);
 
 	return (
 		<div className='flex justify-center align-middle h-auto bg-transparent'>
