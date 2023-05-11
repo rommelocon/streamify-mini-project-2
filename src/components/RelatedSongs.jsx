@@ -1,3 +1,4 @@
+import PlayPause from './PlayPause';
 import SongBar from './SongBar';
 
 const RelatedSongs = ({
@@ -31,6 +32,7 @@ const RelatedSongs = ({
 					<p className='text-gray-400 text-base my-1'>No data available</p>
 				)}
 			</div>
+			
 		</>
 	);
 };
