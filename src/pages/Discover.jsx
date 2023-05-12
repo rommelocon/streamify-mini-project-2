@@ -1,15 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Error, Loader, SongCard } from '../components';
-import { genres } from '../assets/constants';
 import { useGetTopChartsQuery } from '../redux/services/shazamCore';
-import { selectGenreListId } from '../redux/features/playerSlice';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Discover = () => {
 	const [auth, setAuth] = useState(false);
-	const [message, setMessage] = useState('');
 	const [name, setName] = useState('');
 	axios.defaults.withCredentials = true;
 
@@ -35,9 +32,8 @@ const Discover = () => {
 			})
 			.catch((err) => console.log(err));
 	};
-	const dispatch = useDispatch();
 
-	const { activeSong, isPlaying, genreListId } = useSelector(
+	const { activeSong, isPlaying } = useSelector(
 		(state) => state.player
 	);
 
