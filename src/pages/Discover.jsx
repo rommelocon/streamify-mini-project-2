@@ -19,7 +19,6 @@ const Discover = () => {
 					setName(res.data.name);
 				} else {
 					setAuth(false);
-					setMessage(res.data.Error);
 				}
 			})
 			.then((err) => console.log(err));
