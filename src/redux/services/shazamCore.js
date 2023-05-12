@@ -8,7 +8,8 @@ export const shazamCoreApi = createApi({
 			headers.set(
 				'X-RapidAPI-Key',
 				// '4fdde24a54msh249deb3565fe0ecp13bac4jsn1c4448a30513'
-				'a7f73ad2c8msh0d95dd112ccfd2ap10d3b8jsn00dc82742c9f'
+				// 'a7f73ad2c8msh0d95dd112ccfd2ap10d3b8jsn00dc82742c9f'
+				'27d852fb0amshe292fdfc756c27ap1968dejsn9b9f913c883b'
 			);
 
 			return headers;

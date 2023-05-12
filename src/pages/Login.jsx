@@ -1,36 +1,37 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ApiService from '../components/ApiService';
+import axios from 'axios';
 
 function Login() {
-	const [credentials, setCredentials] = useState({
+	const [values, setValues] = useState({
 		email: '',
 		password: '',
 	});
 
-	const [user, setUser] = useState(null);
-
-	const handleInput = (event) => {
-		setCredentials((prev) => ({
+	const handleInput = (e) => {
+		setValues((prev) => ({
 			...prev,
-			[event.target.name]: event.target.value,
+			[e.target.name]: e.target.value,
 		}));
 	};
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		ApiService(
-			'/accounts/login',
-			credentials,
-			(data) => {
-				setCredentials({ email: '', password: '' });
-				setUser(data.user);
-			},
-			'POST'
-		);
+	const navigate = useNavigate();
+	axios.defaults.withCredentials = true;
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		axios
+			.post('http://localhost:8000/login', values)
+			.then((res) => {
+				if (res.data.Status === 'Success') {
+					navigate('/');
+				} else {
+					alert(res.data.Error);
+				}
+			})
+			.then((err) => console.log(err));
 	};
 
-	console.log(user);
 	return (
 		<div className='flex justify-center items-center'>
 			<div className='text-white p-10 rounded-xl w-full bg-black bg-opacity-20 backdrop-blur-lg'>
@@ -46,7 +47,6 @@ function Login() {
 						<input
 							type='email'
 							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
-							value={credentials.email}
 							onChange={handleInput}
 							placeholder='Enter Email'
 							name='email'
@@ -62,17 +62,10 @@ function Login() {
 						<input
 							type='password'
 							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4'
-							value={credentials.password}
 							onChange={handleInput}
 							placeholder='Enter Password'
 							name='password'
 						/>
-
-						{user && (
-							<div>
-								Welcome, {user.firstName} {user.lastName}
-							</div>
-						)}
 					</div>
 					<div class='grid grid-cols-2 gap-4 mb-3 justify-center items-center text-center'>
 						<button
