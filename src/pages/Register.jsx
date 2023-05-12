@@ -1,44 +1,38 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import ApiService from '../components/ApiService';
+import axios from 'axios';
 
 function Register() {
-	const [credentials, setCredentials] = useState({
-		userName: '',
-		email: '',
-		password: '',
+	const [values, setValues] = useState({
 		firstName: '',
 		lastName: '',
+		email: '',
+		username: '',
+		password: '',
 	});
 
-	const [user, setUser] = useState(null);
-
-	const handleInput = (event) => {
-		setCredentials((prev) => ({
+	const handleInput = (e) => {
+		setValues((prev) => ({
 			...prev,
-			[event.target.name]: event.target.value,
+			[e.target.name]: e.target.value,
 		}));
 	};
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		ApiService(
-			'/accounts/register',
-			credentials,
-			(data) => {
-				setCredentials({
-					userName: '',
-					email: '',
-					password: '',
-					firstName: '',
-					lastName: '',
-				});
-				setUser(data.user);
-			},
-			'POST'
-		);
+	const navigate = useNavigate();
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		axios
+			.post('http://localhost:8000/register', values)
+			.then((res) => {
+				if (res.data.Status === 'Success') {
+					navigate('/login');
+				} else {
+					alert('Error');
+				}
+			})
+			.then((err) => console.log(err));
 	};
-
 	return (
 		<div className='flex justify-center items-center'>
 			<div className='text-white p-10 rounded-xl w-full bg-black bg-opacity-20 backdrop-blur-lg'>

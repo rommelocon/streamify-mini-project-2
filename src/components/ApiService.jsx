@@ -4,7 +4,7 @@ function ApiService(path, formData, responseCallBack, method = 'GET') {
 	const apihost = ApiHost();
 
 	if (method === 'GET') {
-		fetch(apihost + path, { mode: 'cors' })
+		fetch(apihost + path)
 			.then((response) => response.json())
 			.then((data) => {
 				responseCallBack(data);
