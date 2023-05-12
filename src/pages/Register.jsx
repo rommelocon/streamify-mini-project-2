@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ApiService from '../components/ApiService';
+import Validation from './Validation';
 
 function Register() {
 	const [credentials, setCredentials] = useState({
@@ -9,7 +10,10 @@ function Register() {
 		password: '',
 		firstName: '',
 		lastName: '',
+        confirmpassword: '',
 	});
+
+    const [errors, setErrors] = useState({})
 
 	const [user, setUser] = useState(null);
 
@@ -22,6 +26,7 @@ function Register() {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+        setErrors(Validation(credentials));
 		ApiService(
 			'/accounts/register',
 			credentials,
@@ -118,6 +123,7 @@ function Register() {
 							placeholder='Enter Password'
 							name='password'
 						/>
+                        {errors.password && <span className='text-danger'> {errors.password} </span>}
 					</div>
 					<div className='grid grid-cols-4 gap-4 mb-3 justify-center items-center'>
 						<label
@@ -131,8 +137,9 @@ function Register() {
 							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
 							onChange={handleInput}
 							placeholder='Enter Password'
-							name='password'
+							name='confirmpassword'
 						/>
+                        {errors.confirmpassword && <span className='text-danger'> {errors.confirmpassword} </span>}
 					</div>
 					<div class='grid grid-cols-2 gap-4 mb-3 justify-center items-center text-center'>
 						<button className='bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded'>
