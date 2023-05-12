@@ -1,78 +1,144 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Validation from './Validation';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import ApiService from '../components/ApiService';
+import axios from 'axios';
 
 function Register() {
 	const [values, setValues] = useState({
+		firstName: '',
+		lastName: '',
 		email: '',
+		username: '',
 		password: '',
 	});
 
-	const [errors, setErrors] = useState({});
-
-	const handleInput = (event) => {
+	const handleInput = (e) => {
 		setValues((prev) => ({
 			...prev,
-			[event.target.name]: [event.target.value],
+			[e.target.name]: e.target.value,
 		}));
 	};
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		setErrors(Validation(values));
+	const navigate = useNavigate();
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		axios
+			.post('http://localhost:8000/register', values)
+			.then((res) => {
+				if (res.data.Status === 'Success') {
+					navigate('/login');
+				} else {
+					alert('Error');
+				}
+			})
+			.then((err) => console.log(err));
 	};
-
 	return (
-		<div className='d-flex justify-content-center align-items-center bg-primary vh-100'>
-			<div className='bg-white p-3 rounded w-25'>
-				<h2>Register</h2>
+		<div className='flex justify-center items-center'>
+			<div className='text-white p-10 rounded-xl w-full bg-black bg-opacity-20 backdrop-blur-lg'>
+				<h2 className='text-2xl text-center font-bold p-3'>Register</h2>
 				<form action='' onSubmit={handleSubmit}>
-					<div className='mb-3'>
-						<label htmlFor='email'>Email</label>
+					<div className='grid grid-cols-4 gap-4 mb-3 justify-center items-center'>
+						<label
+							htmlFor='firstName'
+							className='text-base font-semibold tracking-wide'
+						>
+							First Name
+						</label>
+						<input
+							type='text'
+							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
+							onChange={handleInput}
+							placeholder='Enter First Name'
+							name='firstName'
+						/>
+					</div>
+					<div className='grid grid-cols-4 gap-4 mb-3 justify-center items-center'>
+						<label
+							htmlFor='lastName'
+							className='text-base font-semibold tracking-wide'
+						>
+							Last Name
+						</label>
+						<input
+							type='text'
+							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
+							onChange={handleInput}
+							placeholder='Enter Last Name'
+							name='lastName'
+						/>
+					</div>
+					<div className='grid grid-cols-4 gap-4 mb-3 justify-center items-center'>
+						<label
+							htmlFor='email'
+							className='text-base font-semibold tracking-wide'
+						>
+							Email
+						</label>
 						<input
 							type='email'
-							className='form-control rounded-0'
+							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
 							onChange={handleInput}
 							placeholder='Enter Email'
 							name='email'
 						/>
-						{errors.email && (
-							<span className='text-danger'> {errors.email}</span>
-						)}
 					</div>
-					<div className='mb-3'>
-						<label htmlFor='password'>Password</label>
+					<div className='grid grid-cols-4 gap-4 mb-3 justify-center items-center'>
+						<label
+							htmlFor='username'
+							className='text-base font-semibold tracking-wide'
+						>
+							Username
+						</label>
+						<input
+							type='text'
+							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
+							onChange={handleInput}
+							placeholder='Enter Username'
+							name='username'
+						/>
+					</div>
+					<div className='grid grid-cols-4 gap-4 mb-3 justify-center items-center'>
+						<label
+							htmlFor='password'
+							className='text-base font-semibold tracking-wide'
+						>
+							Password
+						</label>
 						<input
 							type='password'
-							className='form-control rounded-0'
+							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
 							onChange={handleInput}
 							placeholder='Enter Password'
 							name='password'
 						/>
-						{errors.password && (
-							<span className='text-danger'>{errors.password}</span>
-						)}
 					</div>
-					<div className='mb-3'>
-						<label htmlFor='password'>Confirm Password</label>
+					<div className='grid grid-cols-4 gap-4 mb-3 justify-center items-center'>
+						<label
+							htmlFor='password'
+							className='text-base font-semibold tracking-wide'
+						>
+							Confirm Password
+						</label>
 						<input
 							type='password'
-							className='form-control rounded-0'
+							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
 							onChange={handleInput}
 							placeholder='Enter Password'
 							name='password'
 						/>
-						{errors.password && (
-							<span className='text-danger'>{errors.password}</span>
-						)}
 					</div>
-					<button className='btn btn-success w-100'>Register</button>
-					<Link
-						to='/register'
-						className='btn btn-default border w-100 bg-light'
-					>
-						Register
-					</Link>
+					<div class='grid grid-cols-2 gap-4 mb-3 justify-center items-center text-center'>
+						<button className='bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded'>
+							Register
+						</button>
+						<Link
+							to='/login'
+							className='bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded'
+						>
+							Login
+						</Link>
+					</div>
 				</form>
 			</div>
 		</div>
