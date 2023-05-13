@@ -1,15 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Error, Loader, SongCard } from '../components';
-import { genres } from '../assets/constants';
 import { useGetTopChartsQuery } from '../redux/services/shazamCore';
-import { selectGenreListId } from '../redux/features/playerSlice';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Discover = () => {
 	const [auth, setAuth] = useState(false);
-	const [message, setMessage] = useState('');
 	const [name, setName] = useState('');
 	axios.defaults.withCredentials = true;
 
@@ -22,7 +19,6 @@ const Discover = () => {
 					setName(res.data.name);
 				} else {
 					setAuth(false);
-					setMessage(res.data.Error);
 				}
 			})
 			.then((err) => console.log(err));
@@ -35,11 +31,8 @@ const Discover = () => {
 			})
 			.catch((err) => console.log(err));
 	};
-	const dispatch = useDispatch();
 
-	const { activeSong, isPlaying, genreListId } = useSelector(
-		(state) => state.player
-	);
+	const { activeSong, isPlaying } = useSelector((state) => state.player);
 
 	const { data, isFetching, error } = useGetTopChartsQuery();
 
@@ -53,7 +46,7 @@ const Discover = () => {
             sm:flex-row flex-col mt-4 mb-10'
 			>
 				{auth ? (
-					<div className='flex gap-5 justify-center items-center'>
+					<div className='flex gap-5 justify-between items-center w-full'>
 						<h2 className='font-bold text-3xl text-white text-left'>
 							Welcome back {name}!
 						</h2>
@@ -65,11 +58,10 @@ const Discover = () => {
 						</button>
 					</div>
 				) : (
-					<div className='flex gap-5 justify-center items-center'>
-						<h3>{}</h3>
-						{/* <h3 className='font-bold text-3xl text-white text-left'>
-							Hello! 
-						</h3> */}
+					<div className='flex gap-5 justify-between items-center w-full'>
+						<h3 className='font-bold text-3xl text-white text-left'>
+							Discover
+						</h3>
 						<Link
 							to='/login'
 							className='bg-white/5 bg-opacity-80 backdrop-blur-sm text-white font-bold p-3 text-lg rounded-lg outline-none sm:mt-0 mt-5'

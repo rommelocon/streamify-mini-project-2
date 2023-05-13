@@ -1,27 +1,79 @@
+<<<<<<< HEAD
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import ApiService from '../components/ApiService';
 import axios from 'axios';
+=======
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import ApiService from '../components/ApiService';
+import Validation from './Validation';
+>>>>>>> 4d087d172e82b5a99391029851d6d75a104b959e
 
 function Register() {
 	const [values, setValues] = useState({
 		firstName: '',
 		lastName: '',
+<<<<<<< HEAD
 		email: '',
 		username: '',
 		password: '',
+		confirmPassword: '',
 	});
+
+	const [passwordMatch, setPasswordMatch] = useState(false);
+=======
+        confirmpassword: '',
+	});
+
+    const [errors, setErrors] = useState({})
+
+	const [user, setUser] = useState(null);
+>>>>>>> 4d087d172e82b5a99391029851d6d75a104b959e
 
 	const handleInput = (e) => {
 		setValues((prev) => ({
 			...prev,
 			[e.target.name]: e.target.value,
 		}));
+
+		if (e.target.name === 'password') {
+			setPasswordMatch(e.target.value === values.confirmPassword);
+		} else if (e.target.name === 'confirmPassword') {
+			setPasswordMatch(e.target.value === values.password);
+		}
 	};
 
+<<<<<<< HEAD
 	const navigate = useNavigate();
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (!passwordMatch) {
+			// Passwords don't match, display error message or take other action
+			alert('Passwords do not match');
+			return;
+		}
+=======
+	const handleSubmit = (event) => {
+		event.preventDefault();
+        setErrors(Validation(credentials));
+		ApiService(
+			'/accounts/register',
+			credentials,
+			(data) => {
+				setCredentials({
+					userName: '',
+					email: '',
+					password: '',
+					firstName: '',
+					lastName: '',
+				});
+				setUser(data.user);
+			},
+			'POST'
+		);
+	};
+>>>>>>> 4d087d172e82b5a99391029851d6d75a104b959e
+
 		axios
 			.post('http://localhost:8000/register', values)
 			.then((res) => {
@@ -112,6 +164,7 @@ function Register() {
 							placeholder='Enter Password'
 							name='password'
 						/>
+                        {errors.password && <span className='text-danger'> {errors.password} </span>}
 					</div>
 					<div className='grid grid-cols-4 gap-4 mb-3 justify-center items-center'>
 						<label
@@ -125,9 +178,17 @@ function Register() {
 							className='col-span-3 flex-1 bg-transparent border border-gray-600 rounded placeholder-gray-500 text-base text-white p-4 '
 							onChange={handleInput}
 							placeholder='Enter Password'
-							name='password'
+<<<<<<< HEAD
+							name='confirmPassword'
+=======
+							name='confirmpassword'
+>>>>>>> 4d087d172e82b5a99391029851d6d75a104b959e
 						/>
+                        {errors.confirmpassword && <span className='text-danger'> {errors.confirmpassword} </span>}
 					</div>
+					{!passwordMatch && (
+						<p className='text-red-500'>Passwords do not match</p>
+					)}
 					<div class='grid grid-cols-2 gap-4 mb-3 justify-center items-center text-center'>
 						<button className='bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded'>
 							Register

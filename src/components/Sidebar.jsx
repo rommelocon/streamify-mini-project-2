@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { RiCloseLine } from 'react-icons/ri';
 import { HiOutlineMenu } from 'react-icons/hi';
 
@@ -27,7 +27,7 @@ const Sidebar = () => {
 
 	return (
 		<>
-			<div className='md:flex hidden flex-col w-[240px] py-10 px-4 bg-[#191624]'>
+			<div className='md:flex hidden flex-col w-[240px] py-10 px-4 bg-gradient-to-bl to-black from-[#1c1c55]'>
 				<img src={logo} alt='logo' className='w-full h-14 object-contain' />
 				<NavLinks />
 			</div>

@@ -1,4 +1,3 @@
-import PlayPause from './PlayPause';
 import SongBar from './SongBar';
 
 const RelatedSongs = ({
