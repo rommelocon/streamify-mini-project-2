@@ -7,18 +7,18 @@ import { Error, Loader, SongCard } from '../components';
 const CountryTracks = () => {
 	const [country, setCountry] = useState('');
 	const { activeSong, isPlaying } = useSelector((state) => state.player);
-	const { data, isFetching, error } = useGetTopChartsQuery(10);
+	const { data, isFetching, error } = useGetTopChartsQuery(20);
 
 	useEffect(() => {
 		axios({
-			method: 'get',
-			url: 'https://geo.ipify.org/api/v2/country?apiKey=at_PR5UvSwPxF6DyUJGnebPkoZ0MFNBU',
-			responseType: 'stream',
+		  method: 'GET',
+		  url: 'https://geo.ipify.org/api/v2/country?apiKey=at_PR5UvSwPxF6DyUJGnebPkoZ0MFNBU',
+		  responseType: 'stream',
 		}).then(function (response) {
-			let data = JSON.parse(response.data);
-			setCountry(data.location.country);
+		  let data = JSON.parse(response.data);
+		  setCountry(data.location.country);
 		});
-	}, [country]);
+	  }, [country]);
 
 	if (isFetching) return <Loader title='Loading songs...' />;
 	if (error) return <Error />;

@@ -16,7 +16,7 @@ export const shazamCoreApi = createApi({
 		},
 	}),
 	endpoints: (builder) => ({
-		getTopCharts: builder.query({ query: (startFromList = 0) => `/charts/track?startFrom=${startFromList}` }),
+		getTopCharts: builder.query({ query: (startFromList = 0) => `/charts/track?startFrom=${startFromList}&country=PH` }),
 		getChartList: builder.query({ query: () => `https://shazam.p.rapidapi.com/charts/list` }),
 		getSongDetails: builder.query({
 			query: ({ songid }) => `/songs/get-details?key=${songid}`,
